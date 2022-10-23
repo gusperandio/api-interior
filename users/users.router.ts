@@ -40,18 +40,6 @@ class UsersRouter extends ModelRouter<User> {
     }
   };
 
-  findContatos = (req, resp, next) => {
-    User.findById(req.params.id, "+contatos")
-      .then((rest) => {
-        if (!rest) {
-          throw new NotFoundError("Usuário não existe");
-        } else {
-          resp.json(rest.contatos);
-          return next();
-        }
-      })
-      .catch(next);
-  };
 
   findFormacoes = (req, resp, next) => {
     User.findById(req.params.id, "+formacaoEdu")
@@ -118,22 +106,6 @@ class UsersRouter extends ModelRouter<User> {
        .catch(next);
    };
 
-  replaceContatos = (req, resp, next) => {
-    User.findById(req.params.id)
-      .then((rest) => {
-        if (!rest) {
-          throw new NotFoundError("Usuário não existe");
-        } else {
-          rest.contatos = req.body; //Array de MenuItem
-          return rest.save();
-        }
-      })
-      .then((rest) => {
-        resp.json(rest.contatos);
-        return next();
-      })
-      .catch(next);
-  };
 
   replaceFormacoes = (req, resp, next) => {
     User.findById(req.params.id)
@@ -235,10 +207,7 @@ class UsersRouter extends ModelRouter<User> {
     application.post(`${this.basePath}/authenticateCPF`, verificaCPF);
     application.post(`${this.basePath}/authenticateEmail`, verificaEmail);
 
-    application.get(`${this.basePath}/:id/contatos`, [
-      this.validateId,
-      this.findContatos,
-    ]);
+
     application.get(`${this.basePath}/:id/formacaoEdu`, [
       this.validateId,
       this.findFormacoes,
@@ -258,11 +227,6 @@ class UsersRouter extends ModelRouter<User> {
     application.get(`${this.basePath}/:id/candidaturas`, [
       this.validateId,
       this.findCandidaturas,
-    ]);
-
-    application.put(`${this.basePath}/:id/contatos`, [
-      this.validateId,
-      this.replaceContatos,
     ]);
 
     application.put(`${this.basePath}/:id/formacaoEdu`, [

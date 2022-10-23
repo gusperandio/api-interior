@@ -69,8 +69,7 @@ export const verificaEmail: restify.RequestHandler = (req, resp, next) => {
         if (who) {
           resp.json({
             validado: true,
-            contatos: us.contatos,
-            idRecovery: us._id,
+            idRecovery: us._id
           });
         } else {
           resp.json({ validado: true });

@@ -1,4 +1,4 @@
-
+import { categoriasRouter } from './categorias/categorias.router';
 import { vagasRouter } from "./vagas/vagas.router";
 import { empresasRouter } from "./empresa/empresa.router";
 import { Server } from "./server/server";
@@ -9,7 +9,8 @@ server
   .bootstrap([
     usersRouter,
     empresasRouter,
-    vagasRouter
+    vagasRouter,
+    categoriasRouter
   ])
   .then((server) => {
     console.log("Server is listening on:", server.application.address());

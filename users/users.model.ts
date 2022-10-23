@@ -5,11 +5,11 @@ import { validateCPF } from "../common/validators";
 import * as bcrypt from "bcrypt";
 import { environment } from "../common/environment";
 
-export interface Contatos extends mongoose.Document {
-  tipo: string;
-  contato: string;
-  validado: boolean;
-}
+// export interface Contatos extends mongoose.Document {
+//   tipo: string;
+//   contato: string;
+//   validado: boolean;
+// }
 
 export interface Formacao extends mongoose.Document {
   instituicao: string;
@@ -62,7 +62,8 @@ export interface User extends mongoose.Document {
   bairro: string;
   cidade: string;
   estado: string;
-  contatos: Contatos[];
+  celular: string;
+  telefone: string;
   formacaoEdu: Formacao[];
   expProfissional: Experiencia[];
   cursos: Curso[];
@@ -70,6 +71,7 @@ export interface User extends mongoose.Document {
   descricaoUser: string;
   candidaturas: Candidaturas[];
   numberRecovery: number;
+  curriculo: boolean;
   matches(password: string): boolean;
   hasAny(...profiles: string[]): boolean;
   //hasAny('admin', 'user')
@@ -91,20 +93,6 @@ export interface UserModel extends mongoose.Model<User> {
 //* MATCH = Expressão regular para validar o que foi recebido
 //* VALIDATE = Posso criar uma função ou um objeto para verificar
 
-const contatosSchema = new mongoose.Schema({
-  tipo: {
-    type: String,
-    required: true,
-  },
-  contato: {
-    type: String,
-    required: true,
-  },
-  validado: {
-    type: Boolean,
-    required: true,
-  },
-});
 
 const formacaoSchema = new mongoose.Schema({
   instituicao: {
@@ -287,9 +275,13 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
-  contatos: {
-    type: [contatosSchema],
-    required: false,
+  celular: {
+    type: String,
+    required: true,
+  },
+  telefone: {
+    type: String,
+    required: true,
   },
   formacaoEdu: {
     type: [formacaoSchema],
@@ -320,6 +312,10 @@ const userSchema = new mongoose.Schema({
   numberRecovery: {
     type: Number,
     required: false,
+  },
+  curriculo: {
+    type: Boolean,
+    required: true,
   },
 });
 
