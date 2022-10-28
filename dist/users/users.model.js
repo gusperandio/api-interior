@@ -12,20 +12,6 @@ const environment_1 = require("../common/environment");
 //* ENUM = Só aceita os valores que forem passados
 //* MATCH = Expressão regular para validar o que foi recebido
 //* VALIDATE = Posso criar uma função ou um objeto para verificar
-const contatosSchema = new mongoose.Schema({
-    tipo: {
-        type: String,
-        required: true,
-    },
-    contato: {
-        type: String,
-        required: true,
-    },
-    validado: {
-        type: Boolean,
-        required: true,
-    },
-});
 const formacaoSchema = new mongoose.Schema({
     instituicao: {
         type: String,
@@ -201,8 +187,24 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: false,
     },
-    contatos: {
-        type: [contatosSchema],
+    celular: {
+        type: String,
+        required: true,
+    },
+    celRecado: {
+        type: String,
+        required: false,
+    },
+    telefone: {
+        type: String,
+        required: false,
+    },
+    instagram: {
+        type: String,
+        required: false,
+    },
+    linkedin: {
+        type: String,
         required: false,
     },
     formacaoEdu: {
@@ -234,6 +236,10 @@ const userSchema = new mongoose.Schema({
     numberRecovery: {
         type: Number,
         required: false,
+    },
+    curriculo: {
+        type: Boolean,
+        required: true,
     },
 });
 userSchema.statics.findByEmail = function (email, projection) {

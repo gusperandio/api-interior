@@ -63,19 +63,23 @@ export interface User extends mongoose.Document {
   cidade: string;
   estado: string;
   celular: string;
+  celRecado: string;
   telefone: string;
+  instagram: string;
+  linkedin: string;
   formacaoEdu: Formacao[];
   expProfissional: Experiencia[];
   cursos: Curso[];
   idiomas: Idioma[];
-  descricaoUser: string;
   candidaturas: Candidaturas[];
+  descricaoUser: string;
   numberRecovery: number;
   curriculo: boolean;
   matches(password: string): boolean;
   hasAny(...profiles: string[]): boolean;
   //hasAny('admin', 'user')
 }
+
 
 export interface UserModel extends mongoose.Model<User> {
   findByEmail(email: string, projection?: string): Promise<User>;
@@ -92,7 +96,6 @@ export interface UserModel extends mongoose.Model<User> {
 //* ENUM = Só aceita os valores que forem passados
 //* MATCH = Expressão regular para validar o que foi recebido
 //* VALIDATE = Posso criar uma função ou um objeto para verificar
-
 
 const formacaoSchema = new mongoose.Schema({
   instituicao: {
@@ -279,9 +282,21 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  celRecado: {
+    type: String,
+    required: false,
+  },
   telefone: {
     type: String,
-    required: true,
+    required: false,
+  },
+  instagram: {
+    type: String,
+    required: false,
+  },
+  linkedin: {
+    type: String,
+    required: false,
   },
   formacaoEdu: {
     type: [formacaoSchema],

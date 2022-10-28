@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const categorias_router_1 = require("./categorias/categorias.router");
 const vagas_router_1 = require("./vagas/vagas.router");
 const empresa_router_1 = require("./empresa/empresa.router");
 const server_1 = require("./server/server");
@@ -9,7 +10,8 @@ server
     .bootstrap([
     users_router_1.usersRouter,
     empresa_router_1.empresasRouter,
-    vagas_router_1.vagasRouter
+    vagas_router_1.vagasRouter,
+    categorias_router_1.categoriasRouter
 ])
     .then((server) => {
     console.log("Server is listening on:", server.application.address());
