@@ -12,6 +12,121 @@ const environment_1 = require("../common/environment");
 //* ENUM = Só aceita os valores que forem passados
 //* MATCH = Expressão regular para validar o que foi recebido
 //* VALIDATE = Posso criar uma função ou um objeto para verificar
+const anuncioSchema = new mongoose.Schema({
+    nomeAd: {
+        type: String,
+        required: true,
+        maxlength: 100,
+        minlength: 3,
+    },
+    responsavel: {
+        type: String,
+        required: true
+    },
+    fantasia: {
+        type: String,
+        required: true,
+        maxlength: 100,
+        minlength: 1,
+    },
+    cnpj: {
+        type: String,
+        required: false,
+    },
+    emailEmpresa: {
+        type: String,
+        unique: true,
+        match: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+        required: true,
+    },
+    dataAb: {
+        type: String,
+    },
+    cnae: {
+        type: String,
+        required: false,
+    },
+    situacao: {
+        type: String,
+        required: false,
+    },
+    natureza: {
+        type: String,
+        required: false,
+    },
+    cepAd: {
+        type: String,
+        required: true,
+    },
+    numeroAd: {
+        type: Number,
+        required: true,
+    },
+    complementoAd: {
+        type: String,
+        required: false,
+    },
+    enderecoAd: {
+        type: String,
+        required: true,
+    },
+    bairroAd: {
+        type: String,
+        required: true,
+    },
+    cidadeAd: {
+        type: String,
+        required: true,
+    },
+    estadoAd: {
+        type: String,
+        required: true,
+    },
+    celularAd: {
+        type: String,
+        required: false,
+    },
+    telefoneAd: {
+        type: String,
+        required: false,
+    },
+    ramo: {
+        type: String,
+        required: true,
+    },
+    descricaoAd: {
+        type: String,
+        required: true,
+        maxlength: 500,
+        minlength: 99,
+    },
+});
+const notificacaoSchema = new mongoose.Schema({
+    TituloNotif: {
+        type: String,
+        required: true,
+    },
+    dataNotif: {
+        type: String,
+        required: true,
+    },
+    subNotif1: {
+        type: String,
+        required: false,
+    },
+    subNotif2: {
+        type: String,
+        required: false,
+    },
+    subNotif3: {
+        type: String,
+        required: false,
+    },
+    horaNotif: {
+        type: String,
+        required: true,
+    },
+});
 const formacaoSchema = new mongoose.Schema({
     instituicao: {
         type: String,
@@ -222,6 +337,14 @@ const userSchema = new mongoose.Schema({
     idiomas: {
         type: [idiomasSchema],
         required: false,
+    },
+    anuncios: {
+        type: [anuncioSchema],
+        required: false
+    },
+    notificacao: {
+        type: [notificacaoSchema],
+        required: false
     },
     descricaoUser: {
         type: String,

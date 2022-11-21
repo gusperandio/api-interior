@@ -1,15 +1,40 @@
-import { Empresa } from "./../empresa/empresa.model";
 import { Vagas } from "./../vagas/vagas.model";
 import * as mongoose from "mongoose";
 import { validateCPF } from "../common/validators";
 import * as bcrypt from "bcrypt";
 import { environment } from "../common/environment";
 
-// export interface Contatos extends mongoose.Document {
-//   tipo: string;
-//   contato: string;
-//   validado: boolean;
-// }
+export interface Anuncio extends mongoose.Document {
+  nomeAd: string;
+  responsavel: string;
+  fantasia: string;
+  cnpj: string;
+  emailEmpresa: string;
+  dataAb: string;
+  cnae: string;
+  situacao: string;
+  natureza: string;
+  cepAd: string;
+  numeroAd: number;
+  complementoAd: string;
+  enderecoAd: string;
+  bairroAd: string;
+  cidadeAd: string;
+  estadoAd: string;
+  celularAd: string;
+  telefoneAd: string;
+  ramo: string;
+  descricaoAd: string;
+}
+
+export interface Notificacao extends mongoose.Document {
+  TituloNotif: string;
+  dataNotif: string;
+  subNotif1: string;
+  subNotif2: string;
+  subNotif3: string;
+  horaNotif: string;
+}
 
 export interface Formacao extends mongoose.Document {
   instituicao: string;
@@ -72,6 +97,8 @@ export interface User extends mongoose.Document {
   cursos: Curso[];
   idiomas: Idioma[];
   candidaturas: Candidaturas[];
+  anuncios: Anuncio[]
+  notificacao: Notificacao[]
   descricaoUser: string;
   numberRecovery: number;
   curriculo: boolean;
@@ -79,7 +106,6 @@ export interface User extends mongoose.Document {
   hasAny(...profiles: string[]): boolean;
   //hasAny('admin', 'user')
 }
-
 
 export interface UserModel extends mongoose.Model<User> {
   findByEmail(email: string, projection?: string): Promise<User>;
@@ -96,6 +122,125 @@ export interface UserModel extends mongoose.Model<User> {
 //* ENUM = Só aceita os valores que forem passados
 //* MATCH = Expressão regular para validar o que foi recebido
 //* VALIDATE = Posso criar uma função ou um objeto para verificar
+
+const anuncioSchema = new mongoose.Schema({
+  nomeAd: {
+    type: String,
+    required: true,
+    maxlength: 100,
+    minlength: 3,
+  },
+  responsavel:{
+    type: String,
+    required: true
+  },
+  fantasia: {
+    type: String,
+    required: true,
+    maxlength: 100,
+    minlength: 1,
+  },
+  cnpj: {
+    type: String,
+    required: false,
+  },
+  emailEmpresa: {
+    type: String,
+    unique: true,
+    match:
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+    required: true,
+  },
+  dataAb: {
+    type: String,
+  },
+  cnae: {
+    type: String,
+    required: false,
+  },
+  situacao: {
+    type: String,
+    required: false,
+  },
+  natureza: {
+    type: String,
+    required: false,
+  },
+  cepAd: {
+    type: String,
+    required: true,
+  },
+  numeroAd: {
+    type: Number,
+    required: true,
+  },
+  complementoAd: {
+    type: String,
+    required: false,
+  },
+  enderecoAd: {
+    type: String,
+    required: true,
+  },
+  bairroAd: {
+    type: String,
+    required: true,
+  },
+  cidadeAd: {
+    type: String,
+    required: true,
+  },
+  estadoAd: {
+    type: String,
+    required: true,
+  },
+  celularAd: {
+    type: String,
+    required: false,
+  },
+  telefoneAd: {
+    type: String,
+    required: false,
+  },
+  ramo: {
+    type: String,
+    required: true,
+  },
+  descricaoAd: {
+    type: String,
+    required: true,
+    maxlength: 500,
+    minlength: 99,
+  },
+});
+
+
+const notificacaoSchema = new mongoose.Schema({
+  TituloNotif: {
+    type: String,
+    required: true,
+  },
+  dataNotif: {
+    type: String,
+    required: true,
+  },
+  subNotif1: {
+    type: String,
+    required: false,
+  },
+  subNotif2: {
+    type: String,
+    required: false,
+  },
+  subNotif3: {
+    type: String,
+    required: false,
+  },
+  horaNotif: {
+    type: String,
+    required: true,
+  },
+});
 
 const formacaoSchema = new mongoose.Schema({
   instituicao: {
@@ -115,6 +260,8 @@ const formacaoSchema = new mongoose.Schema({
     required: true,
   },
 });
+
+
 
 const expSchema = new mongoose.Schema({
   empresa: {
@@ -313,6 +460,14 @@ const userSchema = new mongoose.Schema({
   idiomas: {
     type: [idiomasSchema],
     required: false,
+  },
+  anuncios:{
+    type: [anuncioSchema],
+    required: false
+  },
+  notificacao:{
+    type: [notificacaoSchema],
+    required: false
   },
   descricaoUser: {
     type: String,

@@ -11,6 +11,7 @@ export interface Contatos extends mongoose.Document {
 
 export interface Empresa extends mongoose.Document {
   nomeEmpresa: string;
+  responsavel: string;
   fantasia: string;
   cnpj: string;
   email: string;
@@ -66,6 +67,10 @@ const empresaSchema = new mongoose.Schema({
     required: true,
     maxlength: 100,
     minlength: 3,
+  },
+  responsavel:{
+    type: String,
+    required: true
   },
   fantasia: {
     type: String,

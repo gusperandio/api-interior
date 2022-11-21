@@ -25,6 +25,10 @@ const empresaSchema = new mongoose.Schema({
         maxlength: 100,
         minlength: 3,
     },
+    responsavel: {
+        type: String,
+        required: true
+    },
     fantasia: {
         type: String,
         required: true,
