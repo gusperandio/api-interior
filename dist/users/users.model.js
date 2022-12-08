@@ -12,95 +12,6 @@ const environment_1 = require("../common/environment");
 //* ENUM = Só aceita os valores que forem passados
 //* MATCH = Expressão regular para validar o que foi recebido
 //* VALIDATE = Posso criar uma função ou um objeto para verificar
-const anuncioSchema = new mongoose.Schema({
-    nomeAd: {
-        type: String,
-        required: true,
-        maxlength: 100,
-        minlength: 3,
-    },
-    responsavel: {
-        type: String,
-        required: true
-    },
-    fantasia: {
-        type: String,
-        required: true,
-        maxlength: 100,
-        minlength: 1,
-    },
-    cnpj: {
-        type: String,
-        required: false,
-    },
-    emailEmpresa: {
-        type: String,
-        unique: true,
-        match: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-        required: true,
-    },
-    dataAb: {
-        type: String,
-    },
-    cnae: {
-        type: String,
-        required: false,
-    },
-    situacao: {
-        type: String,
-        required: false,
-    },
-    natureza: {
-        type: String,
-        required: false,
-    },
-    cepAd: {
-        type: String,
-        required: true,
-    },
-    numeroAd: {
-        type: Number,
-        required: true,
-    },
-    complementoAd: {
-        type: String,
-        required: false,
-    },
-    enderecoAd: {
-        type: String,
-        required: true,
-    },
-    bairroAd: {
-        type: String,
-        required: true,
-    },
-    cidadeAd: {
-        type: String,
-        required: true,
-    },
-    estadoAd: {
-        type: String,
-        required: true,
-    },
-    celularAd: {
-        type: String,
-        required: false,
-    },
-    telefoneAd: {
-        type: String,
-        required: false,
-    },
-    ramo: {
-        type: String,
-        required: true,
-    },
-    descricaoAd: {
-        type: String,
-        required: true,
-        maxlength: 500,
-        minlength: 99,
-    },
-});
 const notificacaoSchema = new mongoose.Schema({
     TituloNotif: {
         type: String,
@@ -240,7 +151,6 @@ const userSchema = new mongoose.Schema({
     cpf: {
         type: String,
         required: false,
-        unique: true,
         validate: {
             validator: validators_1.validateCPF,
             message: "{PATH}: Invalid CPF ({VALUE})",
@@ -305,6 +215,7 @@ const userSchema = new mongoose.Schema({
     celular: {
         type: String,
         required: true,
+        unique: true
     },
     celRecado: {
         type: String,
@@ -337,10 +248,6 @@ const userSchema = new mongoose.Schema({
     idiomas: {
         type: [idiomasSchema],
         required: false,
-    },
-    anuncios: {
-        type: [anuncioSchema],
-        required: false
     },
     notificacao: {
         type: [notificacaoSchema],

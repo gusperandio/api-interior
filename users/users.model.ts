@@ -4,28 +4,7 @@ import { validateCPF } from "../common/validators";
 import * as bcrypt from "bcrypt";
 import { environment } from "../common/environment";
 
-export interface Anuncio extends mongoose.Document {
-  nomeAd: string;
-  responsavel: string;
-  fantasia: string;
-  cnpj: string;
-  emailEmpresa: string;
-  dataAb: string;
-  cnae: string;
-  situacao: string;
-  natureza: string;
-  cepAd: string;
-  numeroAd: number;
-  complementoAd: string;
-  enderecoAd: string;
-  bairroAd: string;
-  cidadeAd: string;
-  estadoAd: string;
-  celularAd: string;
-  telefoneAd: string;
-  ramo: string;
-  descricaoAd: string;
-}
+
 
 export interface Notificacao extends mongoose.Document {
   TituloNotif: string;
@@ -97,7 +76,6 @@ export interface User extends mongoose.Document {
   cursos: Curso[];
   idiomas: Idioma[];
   candidaturas: Candidaturas[];
-  anuncios: Anuncio[]
   notificacao: Notificacao[]
   descricaoUser: string;
   numberRecovery: number;
@@ -122,97 +100,6 @@ export interface UserModel extends mongoose.Model<User> {
 //* ENUM = Só aceita os valores que forem passados
 //* MATCH = Expressão regular para validar o que foi recebido
 //* VALIDATE = Posso criar uma função ou um objeto para verificar
-
-const anuncioSchema = new mongoose.Schema({
-  nomeAd: {
-    type: String,
-    required: true,
-    maxlength: 100,
-    minlength: 3,
-  },
-  responsavel:{
-    type: String,
-    required: true
-  },
-  fantasia: {
-    type: String,
-    required: true,
-    maxlength: 100,
-    minlength: 1,
-  },
-  cnpj: {
-    type: String,
-    required: false,
-  },
-  emailEmpresa: {
-    type: String,
-    unique: true,
-    match:
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-    required: true,
-  },
-  dataAb: {
-    type: String,
-  },
-  cnae: {
-    type: String,
-    required: false,
-  },
-  situacao: {
-    type: String,
-    required: false,
-  },
-  natureza: {
-    type: String,
-    required: false,
-  },
-  cepAd: {
-    type: String,
-    required: true,
-  },
-  numeroAd: {
-    type: Number,
-    required: true,
-  },
-  complementoAd: {
-    type: String,
-    required: false,
-  },
-  enderecoAd: {
-    type: String,
-    required: true,
-  },
-  bairroAd: {
-    type: String,
-    required: true,
-  },
-  cidadeAd: {
-    type: String,
-    required: true,
-  },
-  estadoAd: {
-    type: String,
-    required: true,
-  },
-  celularAd: {
-    type: String,
-    required: false,
-  },
-  telefoneAd: {
-    type: String,
-    required: false,
-  },
-  ramo: {
-    type: String,
-    required: true,
-  },
-  descricaoAd: {
-    type: String,
-    required: true,
-    maxlength: 500,
-    minlength: 99,
-  },
-});
 
 
 const notificacaoSchema = new mongoose.Schema({
@@ -362,7 +249,6 @@ const userSchema = new mongoose.Schema({
   cpf: {
     type: String,
     required: false,
-    unique: true,
     validate: {
       validator: validateCPF,
       message: "{PATH}: Invalid CPF ({VALUE})",
@@ -428,6 +314,7 @@ const userSchema = new mongoose.Schema({
   celular: {
     type: String,
     required: true,
+    unique: true
   },
   celRecado: {
     type: String,
@@ -460,10 +347,6 @@ const userSchema = new mongoose.Schema({
   idiomas: {
     type: [idiomasSchema],
     required: false,
-  },
-  anuncios:{
-    type: [anuncioSchema],
-    required: false
   },
   notificacao:{
     type: [notificacaoSchema],
