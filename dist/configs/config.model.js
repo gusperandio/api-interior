@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Categorias = void 0;
+exports.Configs = void 0;
 const mongoose = require("mongoose");
 const subCategoriaSchema = new mongoose.Schema({
     nome: {
@@ -34,4 +34,14 @@ const categoriaSchema = new mongoose.Schema({
         required: false,
     },
 });
-exports.Categorias = mongoose.model("Categoria", categoriaSchema);
+const configSchema = new mongoose.Schema({
+    categorias: {
+        type: [categoriaSchema],
+        required: false,
+    },
+    salarioAtual: {
+        type: Number,
+        required: false,
+    }
+});
+exports.Configs = mongoose.model("Config", configSchema);

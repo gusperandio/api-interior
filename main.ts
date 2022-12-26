@@ -1,4 +1,4 @@
-import { categoriasRouter } from './categorias/categorias.router';
+import { configsRouter } from './configs/config.router';
 import { vagasRouter } from "./vagas/vagas.router";
 import { empresasRouter } from "./empresa/empresa.router";
 import { Server } from "./server/server";
@@ -10,7 +10,7 @@ server
     usersRouter,
     empresasRouter,
     vagasRouter,
-    categoriasRouter
+    configsRouter
   ])
   .then((server) => {
     console.log("Server is listening on:", server.application.address());

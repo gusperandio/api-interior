@@ -13,6 +13,11 @@ export interface Categorias extends mongoose.Document {
   subcategoria: SubCategorias[];
 }
 
+export interface Configs extends mongoose.Document {
+  categorias: Categorias[];
+  salarioAtual: number;
+}
+
 const subCategoriaSchema = new mongoose.Schema({
   nome: {
     type: String,
@@ -47,7 +52,15 @@ const categoriaSchema = new mongoose.Schema({
   },
 });
 
-export const Categorias = mongoose.model<Categorias>(
-  "Categoria",
-  categoriaSchema
-);
+const configSchema = new mongoose.Schema({
+  categorias: {
+    type: [categoriaSchema],
+    required: false,
+  },
+  salarioAtual: {
+    type: Number,
+    required: false,
+  }
+});
+
+export const Configs = mongoose.model<Configs>("Config", configSchema);
