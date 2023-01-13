@@ -197,7 +197,7 @@ class UsersRouter extends ModelRouter<User> {
       this.findByEmail,
       this.findAll,
     ]);
-
+//
     application.get(`${this.basePath}/:id`, [this.validateId, this.findById]);
     application.post(`${this.basePath}`, [this.save]);
     application.put(`${this.basePath}/:id`, [this.validateId, this.replace]);
