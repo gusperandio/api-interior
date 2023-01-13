@@ -9,30 +9,46 @@ class ConfigsRouter extends ModelRouter<Configs> {
     super(Configs);
   }
 
-  // replaceSubCategorias = (req, resp, next) => {
-  //   Categorias.findById(req.params.id)
-  //     .then((rest) => {
-  //       if (!rest) {
-  //         throw new NotFoundError("Categoria não existe");
-  //       } else {
-  //         rest.subcategoria = req.body; //Array de MenuItem
-  //         return rest.save();
-  //       }
-  //     })
-  //     .then((rest) => {
-  //       resp.json(rest.subcategoria);
-  //       return next();
-  //     })
-  //     .catch(next);
-  // };
+  replaceCategorias = (req, resp, next) => {
+    Configs.findById(req.params.id)
+      .then((rest) => {
+        if (!rest) {
+          throw new NotFoundError("Categoria não existe");
+        } else {
+          rest.categorias = req.body;
+          return rest.save();
+        }
+      })
+      .then((rest) => {
+        resp.json(rest.categorias);
+        return next();
+      })
+      .catch(next);
+  };
 
+  findCategorias = (req, resp, next) => {
+    Configs.findById(req.params.id, "+categorias")
+      .then((rest) => {
+        if (!rest) {
+          throw new NotFoundError("Categoria não existe");
+        } else {
+          resp.json(rest.categorias);
+          return next();
+        }
+      })
+      .catch(next);
+  };
+ 
   // findSubCategorias = (req, resp, next) => {
-  //   Categorias.findById(req.params.id, "+subcategoria")
+  //   Configs.findById(req.params.id, "+categorias")
   //     .then((rest) => {
   //       if (!rest) {
   //         throw new NotFoundError("Categoria não existe");
   //       } else {
-  //         resp.json(rest.subcategoria);
+  //         rest.categorias.forEach(element => {
+  //           console.log(element._id)
+  //         });
+  //         resp.json(rest.categorias);
   //         return next();
   //       }
   //     })
@@ -41,18 +57,22 @@ class ConfigsRouter extends ModelRouter<Configs> {
 
   applyRoutes(application: restify.Server) {
     application.get({ path: `${this.basePath}`, version: "2.0.0" }, [
-        this.findAll
-      ]);
+      this.findAll,
+    ]);
     application.get(`${this.basePath}/:id`, [this.validateId, this.findById]);
 
     // application.get(`${this.basePath}/:id/subcategoria`, [this.validateId, this.findSubCategorias]);
     application.post(`${this.basePath}`, [this.save]);
-    application.patch(`${this.basePath}/:id`, [this.validateId, this.update]);
     application.put(`${this.basePath}/:id`, [this.validateId, this.replace]);
-    // application.put(`${this.basePath}/:id/subcategoria`, [
-    //     this.validateId,
-    //     this.replaceSubCategorias,
-    //   ]);
+    application.patch(`${this.basePath}/:id`, [this.validateId, this.update]);
+    application.put(`${this.basePath}/:id/categoria`, [
+      this.validateId,
+      this.replaceCategorias,
+    ]);
+    application.get(`${this.basePath}/:id/categoria`, [
+      this.validateId,
+      this.findCategorias,
+    ]);
   }
 }
 

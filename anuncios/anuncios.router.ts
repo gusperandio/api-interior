@@ -9,6 +9,8 @@ class CategoriasRouter extends ModelRouter<Anuncios> {
     super(Anuncios);
   }
 
+  
+
   applyRoutes(application: restify.Server) {
     application.get({ path: `${this.basePath}` }, [
         this.findAll

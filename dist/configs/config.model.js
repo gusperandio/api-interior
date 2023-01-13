@@ -19,15 +19,15 @@ const subCategoriaSchema = new mongoose.Schema({
 const categoriaSchema = new mongoose.Schema({
     nome: {
         type: String,
-        required: true,
+        required: false,
     },
     descricao: {
         type: String,
-        required: true,
+        required: false,
     },
     dtCategoria: {
         type: String,
-        required: true,
+        required: false,
     },
     subcategoria: {
         type: [subCategoriaSchema],
@@ -40,7 +40,7 @@ const configSchema = new mongoose.Schema({
         required: false,
     },
     salarioAtual: {
-        type: Number,
+        type: String,
         required: false,
     }
 });
